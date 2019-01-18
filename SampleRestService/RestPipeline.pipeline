@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con3="http://www.bea.com/wli/sb/stages/routing/config">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="SampleRestService/Resources/RestReference"/>
+            <con:binding>
+                <con:name>RestReference_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/R1.3SBApplication/SampleRestService/RestReference</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-ab4baa4.N4306e2db.0.1660b04204e.N8000">
+            <con:stage id="_StageId-ab4baa4.N4306e2db.0.1660b04204e.N7ffe" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="bodyVar">
+                        <con2:id>_ActionId-ab4baa4.N4306e2db.0.1660b04204e.N7ff7</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText>$body</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-ab4baa4.N4306e2db.0.1660b04204e.N7fff">
+            <con:stage id="_StageId-ab4baa4.N4306e2db.0.1660b04204e.N7ffd" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-ab4baa4.N4306e2db.0.1660b04204e.N8000</con:request>
+                <con:response>response-ab4baa4.N4306e2db.0.1660b04204e.N7fff</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1">
+                <con:context/>
+                <con:actions>
+                    <con3:route>
+                        <con2:id>_ActionId-ab4baa4.Nb8ff5bf.0.1660f2c0674.N7e9f</con2:id>
+                        <con3:service ref="SampleRestService/BS/RestReference" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con3:operation>Operation1</con3:operation>
+                        <con3:outboundTransform/>
+                        <con3:responseTransform/>
+                    </con3:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
